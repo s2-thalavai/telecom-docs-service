@@ -1,0 +1,40 @@
+### Telecom Customer API – IntelliJ HTTP Client / VS Code REST Client
+### Full reference: http://localhost:8080/docs/index.html
+@api = http://localhost:8080/api
+
+### Plans (public)
+GET {{api}}/v1/plans
+
+### Create customer (agent)
+POST {{api}}/v1/customers
+Authorization: Basic agent agent-pass
+Content-Type: application/json
+
+{"name":"Karthik R","email":"karthik@example.com","msisdn":"9988776655","planCode":"DATA-299"}
+
+### Get customer v1
+GET {{api}}/v1/customers/1
+Authorization: Basic agent agent-pass
+
+### Get customer v2
+GET {{api}}/v2/customers/1
+Authorization: Basic agent agent-pass
+
+### List customers
+GET {{api}}/v1/customers?status=ACTIVE&page=0&size=20&sort=name,asc
+Authorization: Basic agent agent-pass
+
+### Suspend
+PATCH {{api}}/v1/customers/1/status
+Authorization: Basic agent agent-pass
+Content-Type: application/json
+
+{"status":"SUSPENDED","reason":"Non-payment"}
+
+### Delete as agent -> 403
+DELETE {{api}}/v1/customers/1
+Authorization: Basic agent agent-pass
+
+### Delete as admin -> 204
+DELETE {{api}}/v1/customers/1
+Authorization: Basic admin admin-pass

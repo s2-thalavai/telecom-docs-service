@@ -1,0 +1,30 @@
+[[errors]]
+== Errors
+
+Every error uses the RFC 9457 _Problem Details_ format with media type `application/problem+json`.
+
+[[errors-validation]]
+=== Validation error (400)
+`errors` maps each invalid field to a message.
+
+operation::error-validation[snippets='http-response,response-fields']
+
+[[errors-unauthorized]]
+=== Missing or invalid credentials (401)
+operation::error-unauthorized[snippets='http-response,response-headers']
+
+[[errors-forbidden]]
+=== Insufficient role (403)
+operation::error-forbidden[snippets='http-response']
+
+[[errors-not-found]]
+=== Not found (404)
+operation::error-not-found[snippets='http-response']
+
+[[errors-duplicate]]
+=== Duplicate data (409)
+operation::error-duplicate[snippets='http-response']
+
+[[errors-invalid-state]]
+=== Invalid state transition (409)
+operation::error-invalid-state[snippets='http-response']

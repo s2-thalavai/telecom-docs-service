@@ -1,0 +1,14 @@
+[[plans]]
+== Plans
+
+Active tariff plans. These operations are public.
+
+[[plans-list]]
+=== List plans
+Returns all active plans, cheapest first.
+
+operation::plans-list[snippets='curl-request,http-response,response-fields']
+
+[[plan-get]]
+=== Get a plan
+operation::plan-get[snippets='curl-request,path-parameters,http-response,response-fields']

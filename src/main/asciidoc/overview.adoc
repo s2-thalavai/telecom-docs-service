@@ -1,0 +1,63 @@
+[[overview]]
+== Overview
+
+Base URL: `https://api.telecom.example`. Request and response bodies are JSON (UTF-8).
+Timestamps are ISO-8601 in UTC. Fields without a value are omitted from responses.
+
+[[overview-auth]]
+=== Authentication and roles
+
+Use HTTP Basic authentication over HTTPS.
+
+|===
+| Operation | Required role
+| `GET /api/v1/plans/**` | none (public)
+| `+DELETE /api/{version}/customers/{id}+` | `ADMIN`
+| everything else under `/api/**` | `AGENT` or `ADMIN`
+|===
+
+|===
+| Situation | Status | Example
+| No or wrong credentials | `401 Unauthorized` | <<errors-unauthorized>>
+| Valid credentials, wrong role | `403 Forbidden` | <<errors-forbidden>>
+|===
+
+[[overview-verbs]]
+=== HTTP verbs
+
+|===
+| Verb | Usage
+| `GET` | Read a resource or a page of resources
+| `POST` | Create a resource (returns `201 Created` and a `Location` header)
+| `PUT` | Replace a resource
+| `PATCH` | Partially update a resource (e.g. its status)
+| `DELETE` | Delete a resource (returns `204 No Content`)
+|===
+
+[[overview-status-codes]]
+=== Status codes
+
+|===
+| Code | Meaning
+| `200 OK` | Success
+| `201 Created` | Resource created; see the `Location` header
+| `204 No Content` | Deleted
+| `400 Bad Request` | Validation failed (<<errors-validation>>)
+| `401 Unauthorized` / `403 Forbidden` | Authentication / authorization failure
+| `404 Not Found` | Unknown resource (<<errors-not-found>>)
+| `409 Conflict` | Duplicate data or invalid state transition (<<errors-duplicate>>, <<errors-invalid-state>>)
+|===
+
+[[overview-paging]]
+=== Paging
+
+List endpoints accept `page` (zero-based), `size` (default 20, maximum 100) and `sort` (`property,asc|desc`),
+and return a page envelope with `content`, `page`, `size`, `totalElements` and `totalPages`.
+See <<customers-list>>.
+
+[[overview-versioning]]
+=== Versioning
+
+The major version is part of the path: `/api/v1`, `/api/v2`. Adding optional fields does not change the version.
+Removing or renaming fields, or changing their meaning, creates a new version. A previous version stays available
+for at least 12 months after its successor is released.

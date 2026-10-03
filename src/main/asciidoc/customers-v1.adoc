@@ -1,0 +1,35 @@
+[[customers]]
+== Customers (v1)
+
+[[customer-create]]
+=== Create a customer
+Creates a customer subscribed to an active plan. Email address and mobile number must be unique.
+
+operation::customer-create[snippets='curl-request,request-headers,request-fields,http-response,response-headers,response-fields']
+
+[[customer-get]]
+=== Get a customer
+operation::customer-get[snippets='curl-request,path-parameters,http-response,response-fields']
+
+[[customers-list]]
+=== List customers
+operation::customers-list[snippets='curl-request,query-parameters,http-response,response-fields']
+
+[[customer-update]]
+=== Update a customer
+Replaces the customer's name, contact details and plan.
+
+operation::customer-update[snippets='curl-request,path-parameters,request-fields,http-response']
+
+[[customer-status-change]]
+=== Change status
+`ACTIVE` and `SUSPENDED` can switch back and forth. Any status can change to `TERMINATED`, which is final
+(see <<errors-invalid-state>>).
+
+operation::customer-status-change[snippets='curl-request,path-parameters,request-fields,http-response']
+
+[[customer-delete]]
+=== Delete a customer
+Requires role `ADMIN`.
+
+operation::customer-delete[snippets='curl-request,request-headers,path-parameters,http-response']

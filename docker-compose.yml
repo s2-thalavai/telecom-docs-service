@@ -1,0 +1,57 @@
+# MySQL 8.4 + telecom-docs-service (prod profile). Docs at http://localhost:8080/docs/index.html
+name: telecom-docs
+
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: telecom-docs-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_pass_change_me}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-telecomdb}
+      MYSQL_USER: ${MYSQL_USER:-telecom_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-telecom_pass_change_me}
+      TZ: UTC
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p$${MYSQL_ROOT_PASSWORD} --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+
+  app:
+    build: .
+    image: telecom-docs-service:1.0.0
+    container_name: telecom-docs-app
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: ${MYSQL_DATABASE:-telecomdb}
+      DB_USERNAME: ${MYSQL_USER:-telecom_user}
+      DB_PASSWORD: ${MYSQL_PASSWORD:-telecom_pass_change_me}
+      AGENT_PASSWORD: ${AGENT_PASSWORD:-agent-pass-change-me}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin-pass-change-me}
+    ports:
+      - "${APP_PORT:-8080}:8080"
+
+  # Serves only the static HTML docs (as you would on an internal docs host / GitHub Pages)
+  docs:
+    image: nginx:1.27-alpine
+    container_name: telecom-docs-static
+    profiles: ["docs"]
+    volumes:
+      - ./target/generated-docs:/usr/share/nginx/html:ro
+    ports:
+      - "8082:80"
+
+volumes:
+  mysql-data:

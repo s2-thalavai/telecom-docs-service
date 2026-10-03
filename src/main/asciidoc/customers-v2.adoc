@@ -1,0 +1,9 @@
+[[customers-v2]]
+== Customers (v2)
+
+Version 2 groups contact details and the subscription into nested objects. All other customer operations
+are unchanged from <<customers,v1>>.
+
+[[v2-customer-get]]
+=== Get a customer
+operation::v2/customer-get[snippets='curl-request,path-parameters,http-response,response-fields']

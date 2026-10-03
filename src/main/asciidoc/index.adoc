@@ -1,0 +1,27 @@
+= Telecom Customer API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+:sectlinks:
+:sectanchors:
+:revnumber: {project-version}
+:operation-curl-request-title: Example request
+:operation-httpie-request-title: Example request (HTTPie)
+:operation-http-request-title: HTTP request
+:operation-http-response-title: Example response
+:operation-request-headers-title: Request headers
+:operation-request-fields-title: Request fields
+:operation-response-headers-title: Response headers
+:operation-response-fields-title: Response fields
+:operation-path-parameters-title: Path parameters
+:operation-query-parameters-title: Query parameters
+
+Version {revnumber}. Every example on this page was produced by an automated test against the API.
+
+include::overview.adoc[]
+include::plans.adoc[]
+include::customers-v1.adoc[]
+include::customers-v2.adoc[]
+include::errors.adoc[]

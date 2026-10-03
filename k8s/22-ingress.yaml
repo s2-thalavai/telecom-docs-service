@@ -1,0 +1,19 @@
+# The same host serves the API (/api/**) and its documentation (/docs/**, generated at build time).
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: telecom-docs-ingress
+  namespace: telecom-docs
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: telecom-api.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: telecom-docs-service
+                port:
+                  name: http
